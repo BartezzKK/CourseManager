@@ -1,4 +1,5 @@
 ﻿using CourseManager.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,10 @@ namespace CourseManager.Repositories.Interfaces
 {
     public interface IVideoEduRepository
     {
-        VideoEdu GetVideos();
+        List<VideoEdu> GetVideos();
+        VideoEdu GetVideo(int id);
+        void Create(VideoEdu video);
+        bool Save();
+        bool Delete(int id);
     }
 }

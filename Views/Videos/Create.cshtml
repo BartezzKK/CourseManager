@@ -1,0 +1,21 @@
+﻿@model VideoEdu
+@{
+    ViewBag.Title = "Create new role";
+}
+<h1>Add new Video</h1>
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="VideoUrl"></label>
+                <input asp-for="VideoUrl" class="form-control" />
+                <span asp-validation-for="VideoUrl" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Add video</button>
+        </form>
+    </div>
+</div>

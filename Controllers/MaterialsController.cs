@@ -1,4 +1,5 @@
 ﻿using CourseManager.Models;
+using CourseManager.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,12 @@ namespace CourseManager.Controllers
 {
     public class MaterialsController : Controller
     {
+        private readonly IVideoEduRepository videoEduRepository;
+
+        public MaterialsController(IVideoEduRepository videoEduRepository)
+        {
+            this.videoEduRepository = videoEduRepository;
+        }
 
         [HttpGet]
         public IActionResult GetMaterialCategories()
@@ -31,5 +38,12 @@ namespace CourseManager.Controllers
             //}
             return View();
         }
+
+        //[HttpGet]
+        //public ViewResult Videos()
+        //{
+        //    VideoEdu video = videoEduRepository.GetVideos().First();
+        //    return View(video);
+        //}
     }
 }

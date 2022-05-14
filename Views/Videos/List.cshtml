@@ -1,0 +1,26 @@
+﻿
+<h3>@ViewBag.PageTitle</h3>
+
+@{
+    //pobieramy z VideosController Viewbag z listą wideo
+    var videos = ViewBag.Videos as IEnumerable<VideoEdu>;
+}
+
+<a class="btn btn-primary" asp-area="" asp-controller="Videos" asp-action="Create">Add new Video</a>
+
+<div>
+    <ul>
+        @foreach (var videoEdu in videos)
+        {
+                @*można tak za pomoca actionlink*@
+                @*@Html.ActionLink("View", "details", "home", new { id = videoEdu.Id })*@
+                @*lub za pomocą buttona i href*@
+        <li>
+            <a href="/videos/details/@videoEdu.Id">@videoEdu.Name</a>
+        </li>
+            //żeby wideo z youtube mogło być zagnieżdżone w linku musi się znajdować embed przykład: https://www.youtube.com/embed/BPGtVpu81ek
+            @*<iframe width="560" height="315" src="@videoEdu.VideoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>*@
+        }
+    </ul>
+    
+</div>
