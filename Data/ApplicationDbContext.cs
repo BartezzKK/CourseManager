@@ -18,5 +18,6 @@ namespace CourseManager.Data
         public DbSet<QuizEdu> QuizEdus { get; set; }
         public DbSet<QuizAttempt> QuizAttempts { get; set; }
         public DbSet<QuizQuestion> QuizQuestions { get; set; }
+        public DbSet<ArticleEdu> ArticleEdu { get; set; }
     }
 }

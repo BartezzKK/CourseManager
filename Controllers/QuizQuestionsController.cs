@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CourseManager.Data;
 using CourseManager.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace CourseManager.Controllers
 {
@@ -81,19 +82,39 @@ namespace CourseManager.Controllers
         // POST: QuizQuestions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(QuizQuestion quizQuestion)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //        quizQuestion.UserId = userId;
+        //        _context.Add(quizQuestion);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(quizQuestion);
+        //}
+
+
+        // POST: QuizQuestions/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(QuizQuestion quizQuestion)
+        public async Task<IActionResult> Create(IFormCollection formCollection)
         {
+            string[] cos = formCollection[""];
             if (ModelState.IsValid)
             {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                quizQuestion.UserId = userId;
-                _context.Add(quizQuestion);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //quizQuestion.UserId = userId;
+                //_context.Add(quizQuestion);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
             }
-            return View(quizQuestion);
+            return View("31");
         }
 
         // GET: QuizQuestions/Edit/5
@@ -180,5 +201,11 @@ namespace CourseManager.Controllers
         {
             return _context.QuizQuestions.Any(e => e.Id == id);
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> Index()
+        //{
+        //    return 
+        //}
     }
 }

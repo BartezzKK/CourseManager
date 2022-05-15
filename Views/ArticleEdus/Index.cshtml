@@ -1,0 +1,23 @@
+﻿@model IEnumerable<CourseManager.Models.ArticleEdu>
+
+@{
+    ViewData["Title"] = "";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New Article</a>
+</p>
+
+<div>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <a href="/ArticleEdus/Details/@item.Id">@item.Title</a> - @item.PublicationDate.ToString("f")
+            </li>
+        }
+    </ul>
+</div>
+

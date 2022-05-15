@@ -5,6 +5,7 @@
 }
 
 <h1>Details</h1>
+    @Html.ActionLink("Add new question", "Create", "QuizQuestions")
 
 <div>
     <h4>QuizEdu</h4>
@@ -29,9 +30,24 @@
             @Html.DisplayFor(model => model.UserId)
         </dd>
     </dl>
+
+    <h3>List of questions</h3>
+    @foreach (var item in Model.Questions)
+    {
+        <div>@(Model.Questions.IndexOf(item)+1) .@item.Question</div>
+        <br />
+        <div>A @item.AnswerA</div>
+        <br />
+        <div>B @item.AnswerB</div>
+        <br />
+        <div>C @item.AnswerC</div>
+        <br />
+        <div>D @item.AnswerD</div>
+        <br />
+        <hr />
+    }
 </div>
 <div>
-    @Html.ActionLink("Add new question", "Create", "QuizQuestions");
     @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |*@
     <br />
     <a asp-action="Index">Back to List</a>

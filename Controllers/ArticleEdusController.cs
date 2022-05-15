@@ -9,24 +9,24 @@ using CourseManager.Data;
 using CourseManager.Models;
 using System.Security.Claims;
 
-namespace CourseManager.Controllers
+namespace CourseManager.Views
 {
-    public class QuizEdusController : Controller
+    public class ArticleEdusController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public QuizEdusController(ApplicationDbContext context)
+        public ArticleEdusController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: QuizEdus
+        // GET: ArticleEdus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.QuizEdus.ToListAsync());
+            return View(await _context.ArticleEdu.ToListAsync());
         }
 
-        // GET: QuizEdus/Details/5
+        // GET: ArticleEdus/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,42 @@ namespace CourseManager.Controllers
                 return NotFound();
             }
 
-            var quizEdu = await _context.QuizEdus
-                .Include("Questions")
+            var articleEdu = await _context.ArticleEdu
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (quizEdu == null)
+            if (articleEdu == null)
             {
                 return NotFound();
             }
 
-            return View(quizEdu);
+            return View(articleEdu);
         }
 
-        // GET: QuizEdus/Create
+        // GET: ArticleEdus/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: QuizEdus/Create
+        // POST: ArticleEdus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,UserId")] QuizEdu quizEdu)
+        public async Task<IActionResult> Create([Bind("Id,Title,Content,UserId,PublicationDate")] ArticleEdu articleEdu)
         {
             if (ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                quizEdu.UserId = userId;
-                _context.Add(quizEdu);
+                articleEdu.UserId = userId;
+                articleEdu.PublicationDate = DateTime.Now;
+                _context.Add(articleEdu);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(quizEdu);
+            return View(articleEdu);
         }
 
-        // GET: QuizEdus/Edit/5
+        // GET: ArticleEdus/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +77,22 @@ namespace CourseManager.Controllers
                 return NotFound();
             }
 
-            var quizEdu = await _context.QuizEdus.FindAsync(id);
-            if (quizEdu == null)
+            var articleEdu = await _context.ArticleEdu.FindAsync(id);
+            if (articleEdu == null)
             {
                 return NotFound();
             }
-            return View(quizEdu);
+            return View(articleEdu);
         }
 
-        // POST: QuizEdus/Edit/5
+        // POST: ArticleEdus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,UserId")] QuizEdu quizEdu)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,UserId,PublicationDate")] ArticleEdu articleEdu)
         {
-            if (id != quizEdu.Id)
+            if (id != articleEdu.Id)
             {
                 return NotFound();
             }
@@ -101,12 +101,12 @@ namespace CourseManager.Controllers
             {
                 try
                 {
-                    _context.Update(quizEdu);
+                    _context.Update(articleEdu);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!QuizEduExists(quizEdu.Id))
+                    if (!ArticleEduExists(articleEdu.Id))
                     {
                         return NotFound();
                     }
@@ -117,10 +117,10 @@ namespace CourseManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(quizEdu);
+            return View(articleEdu);
         }
 
-        // GET: QuizEdus/Delete/5
+        // GET: ArticleEdus/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,30 +128,30 @@ namespace CourseManager.Controllers
                 return NotFound();
             }
 
-            var quizEdu = await _context.QuizEdus
+            var articleEdu = await _context.ArticleEdu
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (quizEdu == null)
+            if (articleEdu == null)
             {
                 return NotFound();
             }
 
-            return View(quizEdu);
+            return View(articleEdu);
         }
 
-        // POST: QuizEdus/Delete/5
+        // POST: ArticleEdus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var quizEdu = await _context.QuizEdus.FindAsync(id);
-            _context.QuizEdus.Remove(quizEdu);
+            var articleEdu = await _context.ArticleEdu.FindAsync(id);
+            _context.ArticleEdu.Remove(articleEdu);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool QuizEduExists(int id)
+        private bool ArticleEduExists(int id)
         {
-            return _context.QuizEdus.Any(e => e.Id == id);
+            return _context.ArticleEdu.Any(e => e.Id == id);
         }
     }
 }
