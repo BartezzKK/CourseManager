@@ -1,12 +1,21 @@
 ﻿@model VideoEdu
 
 
-<div>
-    Nazwa filmu: @Model.Name
-</div>
-<br />
-Film:
-<iframe width="560" height="315" src="@Model.VideoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+<div class="row">
+     <div class="col-md-6 col-xs-1" >
+         <h2> @Model.Name</h2>
+         <iframe width="560" height="315" src="@Model.VideoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+     </div>
+       <div class="col-md-6 col-xs-1 astro-container">
+         <img src="/assets/img/astro.svg"/>
+     </div>
+</div>
+
+   
+
+<br />
+
+</div>
 <a asp-page="/Videos/Delete"></a>
 
