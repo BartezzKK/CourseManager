@@ -2,9 +2,12 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-size: 44px;
+    letter-spacing: 3px;
+    color: #40C9A2;
 }
 
 /* Provide sufficient contrast against white background */
@@ -23,11 +26,13 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-
+.logo {
+    border-bottom: 2px solid #1b6ec2;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 @media (min-width: 768px) {
   html {
@@ -61,6 +66,9 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  overflow-x: hidden;
+}
+.container {
 }
 .footer {
   position: absolute;
@@ -70,7 +78,7 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-
+/* Home page css */
 .home-pg-col{
     display: flex;
     flex-direction: column;
@@ -80,6 +88,41 @@ body {
 }
 .home-title {
     margin-bottom: 30px;
+}
+/* video details css */
+.videoDetailContainer {
+    min-height:80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.video-title {
+    margin-bottom: 50px;
+}
+.astro-container {
+    z-index: -10;
+}
+.astro-container img {
+    position:relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.yt__iframe {
+    width: 100%;
+}
+/* materials css */
+.materialsIco-container {
+    margin-top:100px;
+    overflow-x: hidden;
+}
+.materials__container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+.materials-computer {
+    width: 500px;
+}
 }
 
 
@@ -153,4 +196,11 @@ button:focus {
         border-right: none;
         border-bottom: 1px solid #EEEEEE;
     }
+}
+
+.border-edus {
+    border: 1px solid #000;
+    border-radius: 20px;
+    padding: 15px;
+    background-color: gainsboro;
 }
