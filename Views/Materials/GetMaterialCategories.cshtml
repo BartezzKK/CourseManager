@@ -2,18 +2,33 @@
 @{
    
 }
-
-<h1>
-    @*<a class="" asp-controller="Materials" asp-action="GetVideos">Videos</a>*@
-    <a class="" asp-controller="Videos" asp-action="List">Videos</a>
-</h1>
-<br />
-<h1>
+<div  class="materials__container">
+    <div col-md-4 col-xs-1">
+        <h1>
+            @*<a class="" asp-controller="Materials" asp-action="GetVideos">Videos</a>*@
+            <a class="" asp-controller="Videos" asp-action="List">Videos</a>
+        </h1>
+    </div>
+<div col-md-4 col-xs-1" >
+    <h1>
     @*<a class="" asp-controller="Materials" asp-action="GetVideos">Videos</a>*@
     <a class="" asp-controller="QuizEdus" asp-action="Index">Quizzes</a>
 </h1>
-<br />
-<h1>
+</div>
+<div col-md-4 col-xs-1">
+    <h1>
     @*<a class="" asp-controller="Materials" asp-action="GetVideos">Videos</a>*@
     <a class="" asp-controller="ArticleEdus" asp-action="Index">Articles</a>
 </h1>
+</div>
+</div>
+<div class="row materialsIco-container">
+    <div class="col-md-6">
+        <img class="materials-computer"src="~/assets/img/computer03.png"/>
+    </div>
+    <div class="col-md-6">
+        <img class="materials-computer"src="~/assets/img/Ikbal 2.png"/>
+    </div>
+</div>
+
+
