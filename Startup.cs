@@ -47,6 +47,7 @@ namespace CourseManager
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
             services.AddTransient<IVideoEduRepository, VideoEduRepository>();
+            services.AddTransient<IPaymentsRepository, PaymentRepository>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

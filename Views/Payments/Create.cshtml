@@ -1,0 +1,107 @@
+﻿@model CourseManager.Models.Payment
+
+@{
+    //todo zrobić blokowanie przycisku jeżeli nie ma uzaupełnionych danych karty
+    ViewData["Title"] = "New payment";
+}
+
+<h1>New transaction</h1>
+
+<h4>Payment</h4>
+<hr />
+<div class="row">
+<div class="col-md-4">
+   <form asp-action="Create">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+         <label asp-for="PaymentDate" class="control-label"></label>
+         <input asp-for="PaymentDate" class="form-control" />
+         <span asp-validation-for="PaymentDate" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+         <label asp-for="EndSubscription" class="control-label"></label>
+         <input asp-for="EndSubscription" class="form-control" />
+         <span asp-validation-for="EndSubscription" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+         <p class="text-muted text-sm mb-0">Card Number</p>
+         <div class="row px-3">
+            <input type="text" name="card-num" placeholder="0000 0000 0000 0000" size="18" id="cr_no" minlength="19" maxlength="19">
+            <p class="mb-0 ml-3">/</p>
+            <img class="image ml-1" src="https://i.imgur.com/WIAP9Ku.jpg">
+         </div>
+      </div>
+      <div class="form-group">
+         <p class="text-muted text-sm mb-0">Expiry date</p>
+         <input type="text" name="exp" placeholder="MM/YY" size="6" id="exp" minlength="5" maxlength="5">
+      </div>
+      <div class="form-group">
+         <p class="text-muted text-sm mb-0">CVV/CVC</p>
+         <input type="password" name="cvv" placeholder="000" size="1" minlength="3" maxlength="3">
+      </div>
+      <div class="form-group">
+         <input type="submit" value="Pay" class="btn btn-primary" />
+      </div>
+   </form>
+</div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript"> 
+    $(document).ready(function(){
+//For Card Number formatted input
+var cardNum = document.getElementById('cr_no');
+cardNum.onkeyup = function (e) {
+    if (this.value == this.lastValue) return;
+    var caretPosition = this.selectionStart;
+    var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+    var parts = [];
+    
+    for (var i = 0, len = sanitizedValue.length; i < len; i += 4) {
+        parts.push(sanitizedValue.substring(i, i + 4));
+    }
+    
+    for (var i = caretPosition - 1; i >= 0; i--) {
+        var c = this.value[i];
+        if (c < '0' || c > '9') {
+            caretPosition--;
+        }
+    }
+    caretPosition += Math.floor(caretPosition / 4);
+    
+    this.value = this.lastValue = parts.join(' ');
+    this.selectionStart = this.selectionEnd = caretPosition;
+}
+
+//For Date formatted input
+var expDate = document.getElementById('exp');
+expDate.onkeyup = function (e) {
+    if (this.value == this.lastValue) return;
+    var caretPosition = this.selectionStart;
+    var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+    var parts = [];
+    
+    for (var i = 0, len = sanitizedValue.length; i < len; i += 2) {
+        parts.push(sanitizedValue.substring(i, i + 2));
+    }
+    
+    for (var i = caretPosition - 1; i >= 0; i--) {
+        var c = this.value[i];
+        if (c < '0' || c > '9') {
+            caretPosition--;
+        }
+    }
+    caretPosition += Math.floor(caretPosition / 2);
+    
+    this.value = this.lastValue = parts.join('/');
+    this.selectionStart = this.selectionEnd = caretPosition;
+}
+
+});
+</script>
+}
