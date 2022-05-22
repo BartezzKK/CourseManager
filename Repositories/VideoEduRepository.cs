@@ -19,7 +19,7 @@ namespace CourseManager.Repositories
         
         public VideoEdu GetVideo(int id)
         {
-            return Videos.Where(p => p.Id == id).FirstOrDefault();
+            return _context.VideoEdus.Where(p => p.Id == id).FirstOrDefault();
         }
 
         public List<VideoEdu> GetVideos()

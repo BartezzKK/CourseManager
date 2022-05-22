@@ -48,6 +48,8 @@ namespace CourseManager.Controllers
                 if (ModelState.IsValid)
                 {
                     video.Active = true;
+                    string endedUrl = video.VideoUrl.Split('=')[1];
+                    video.VideoUrl = "https://www.youtube.com/embed/" + endedUrl;
                     videoEduRepository.Create(video);
                     if(videoEduRepository.Save() == true)
                     {
