@@ -79,7 +79,7 @@ body {
 }
 
 /* Home page css */
-.home-pg-col{
+.home-pg-col {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,9 +89,117 @@ body {
 .home-title {
     margin-bottom: 30px;
 }
+
+/* Home page - slider css*/
+.slider-section {
+    width: 800px;
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.slides-section {
+    width: 500%;
+    height: 500px;
+    display: flex;
+}
+
+.slides-section input {
+    display: none;
+}
+
+.slide{
+    
+    transition: 2s;
+}
+
+.slide img {
+    width: 800px;
+    height: 500px;
+}
+
+.manual-navigation{
+    position: absolute;
+    width: 800px;
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+}
+
+.manual-button {
+    border: 2px solid #dc3545;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.7s;
+}
+
+.manual-button:not(:last-child){
+    margin-right: 40px;
+}
+
+.manual-button:hover {
+        background: #dc3545;
+}
+
+#radio-button-1:checked ~ .first{
+    margin-left: 0;
+}
+
+#radio-button-2:checked ~ .first {
+    margin-left: -20%;
+}
+
+#radio-button-3:checked ~ .first {
+    margin-left: -40%;
+}
+
+#radio-button-4:checked ~ .first {
+    margin-left: -60%;
+}
+
+/*auto slider*/
+.auto-navigation{
+    position: absolute;
+    display: flex;
+    width: 800px;
+    justify-content: center;
+    margin-top: 460px;
+}
+.auto-navigation div{
+    border: 2px solid #dc3545;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 0.7s;
+
+}
+
+.auto-navigation div:not(:last-child){
+    margin-right: 40px;
+}
+
+#radio-button-1:checked ~ .auto-navigation .auto-button-1 {
+    background: #dc3545;
+}
+
+#radio-button-2:checked ~ .auto-navigation .auto-button-2 {
+    background: #dc3545;
+}
+
+#radio-button-3:checked ~ .auto-navigation .auto-button-3{
+    background: #dc3545;
+}
+
+#radio-button-4:checked ~ .auto-navigation .auto-button-4 {
+    background: #dc3545;
+}
+
+
 /* video details css */
 .videoDetailContainer {
-    min-height:80vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
