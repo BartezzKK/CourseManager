@@ -14,3 +14,5 @@ setInterval(function () {
     }
 }, 3000)
 //End of Slider
+
+//Contact Form in _Layout.cshtml
