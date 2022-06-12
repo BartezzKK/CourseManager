@@ -8,22 +8,33 @@ using Microsoft.EntityFrameworkCore;
 using CourseManager.Data;
 using CourseManager.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using CourseManager.Repositories.Interfaces;
 
 namespace CourseManager.Controllers
 {
     public class QuizEdusController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IPaymentsRepository paymentsRepository;
 
-        public QuizEdusController(ApplicationDbContext context)
+        public QuizEdusController(ApplicationDbContext context, IPaymentsRepository paymentsRepository)
         {
             _context = context;
+            this.paymentsRepository = paymentsRepository;
         }
 
         // GET: QuizEdus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.QuizEdus.ToListAsync());
+            //if (paymentsRepository.CheckPaymentForUser(this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            //{
+                return View(await _context.QuizEdus.ToListAsync());
+            //}
+            //else
+            //{
+            //    return new RedirectToPageResult("/administration/missingPayment");
+            //}
         }
 
         // GET: QuizEdus/Details/5
@@ -46,6 +57,7 @@ namespace CourseManager.Controllers
         }
 
         // GET: QuizEdus/Create
+        [Authorize(Roles = "Administrator, Teacher")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +66,7 @@ namespace CourseManager.Controllers
         // POST: QuizEdus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,UserId")] QuizEdu quizEdu)
@@ -70,6 +83,7 @@ namespace CourseManager.Controllers
         }
 
         // GET: QuizEdus/Edit/5
+        [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,6 +102,7 @@ namespace CourseManager.Controllers
         // POST: QuizEdus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,UserId")] QuizEdu quizEdu)
@@ -121,6 +136,7 @@ namespace CourseManager.Controllers
         }
 
         // GET: QuizEdus/Delete/5
+        [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,6 +155,7 @@ namespace CourseManager.Controllers
         }
 
         // POST: QuizEdus/Delete/5
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

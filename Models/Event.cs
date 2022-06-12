@@ -12,5 +12,7 @@ namespace CourseManager.Models
         public DateTime StartDate { get; set; }
         public DateTime EndTime{ get; set; }
         public string Location { get; set; }
+        public string UserId { get; set; }
+        public string TeacherId { get; set; }
     }
 }

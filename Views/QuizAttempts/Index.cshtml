@@ -1,0 +1,9 @@
+﻿
+
+    @foreach (var item in ViewBag.Quizes)
+    {
+        <h3><a asp-action="StartQuiz" asp-route-id="@item.Id">@item.Name</a></h3>
+
+    }
+@{
+}

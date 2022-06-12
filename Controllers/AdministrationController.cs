@@ -1,5 +1,6 @@
 ﻿using CourseManager.Models;
 using CourseManager.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,18 +21,20 @@ namespace CourseManager.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult CreateRole()
         {
             return View();
         }
-
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
@@ -54,6 +57,8 @@ namespace CourseManager.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult ListRoles()
         {
@@ -61,6 +66,7 @@ namespace CourseManager.Controllers
             return View(roles);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> EditUserInRole(string roleId)
         {
@@ -97,6 +103,7 @@ namespace CourseManager.Controllers
                 return View(model);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> EditUserInRole(List<UserRoleViewModel> model, string roleId)
         {

@@ -158,8 +158,8 @@ namespace CourseManager.Controllers
                 id = p.Id,
                 title = p.Title,
                 description = p.Description,
-                startDate = p.StartDate.ToString("dd/MM/yyyy"),
-                endDate = p.EndTime.ToString("dd/MM/yyyy")
+                start = p.StartDate.ToString("MM/dd/yyyy"),
+                end = p.EndTime.ToString("MM/dd/yyyy")
             }).ToList();
             return new JsonResult(events);
         }

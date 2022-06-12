@@ -57,5 +57,10 @@ namespace CourseManager.Repositories
                 return false;
             }
         }
+
+        public bool CheckPaymentForUser(string userId)
+        {
+            return context.Payments.Where(p => p.UserId == userId && p.EndSubscription > System.DateTime.Now && p.PaymentDate < System.DateTime.Now).Any();
+        }
     }
 }

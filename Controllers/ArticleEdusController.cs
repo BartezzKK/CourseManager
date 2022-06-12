@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CourseManager.Data;
 using CourseManager.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CourseManager.Views
 {
@@ -45,6 +46,7 @@ namespace CourseManager.Views
         }
 
         // GET: ArticleEdus/Create
+        [Authorize(Roles = "Administrator, Teacher")]
         public IActionResult Create()
         {
             return View();
@@ -53,6 +55,7 @@ namespace CourseManager.Views
         // POST: ArticleEdus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Content,UserId,PublicationDate")] ArticleEdu articleEdu)
@@ -70,6 +73,7 @@ namespace CourseManager.Views
         }
 
         // GET: ArticleEdus/Edit/5
+        [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,6 +92,7 @@ namespace CourseManager.Views
         // POST: ArticleEdus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,UserId,PublicationDate")] ArticleEdu articleEdu)
@@ -121,6 +126,7 @@ namespace CourseManager.Views
         }
 
         // GET: ArticleEdus/Delete/5
+        [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,6 +145,7 @@ namespace CourseManager.Views
         }
 
         // POST: ArticleEdus/Delete/5
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

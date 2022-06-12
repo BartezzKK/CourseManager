@@ -1,14 +1,19 @@
-﻿@model IEnumerable<CourseManager.Models.ArticleEdu>
+﻿@using Microsoft.AspNetCore.Authorization
+@model IEnumerable<CourseManager.Models.ArticleEdu>
+@inject IAuthorizationService authorizationService
 
 @{
     ViewData["Title"] = "";
 }
 
 <h1>Index</h1>
-
+@if(User.IsInRole("Administrator") || User.IsInRole("Teacher"))
+{
 <p>
     <a asp-action="Create">Create New Article</a>
-</p>
+</p>    
+}
+
 
 <div>
     <ul>

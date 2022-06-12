@@ -9,6 +9,7 @@ using CourseManager.Data;
 using CourseManager.Models;
 using System.Security.Claims;
 using CourseManager.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CourseManager.Controllers
 {
@@ -97,6 +98,7 @@ namespace CourseManager.Controllers
         // POST: Payments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,PaymentDate,EndSubscription")] Payment payment)
@@ -130,6 +132,7 @@ namespace CourseManager.Controllers
         }
 
         // GET: Payments/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,6 +151,7 @@ namespace CourseManager.Controllers
         }
 
         // POST: Payments/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

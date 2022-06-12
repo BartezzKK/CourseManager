@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Index";
 }
+<p>
+    <a asp-action="Create">Add new event</a>
+</p>
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
@@ -34,24 +37,27 @@
 
 
 @section Scripts{
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js" integrity="sha512-x/vqovXY/Q4b+rNjgiheBsA/vbWA3IVvsS8lkQSX1gQ4ggSJx38oI2vREZXpTzhAv6tNUaX81E7QBBzkpDQayA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+    <script src="https://rawgit.com/moment/moment/2.8.2/min/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.min.js"></script>
 
     <script>
         $(document).ready(function(){
-            $('$bootstrapModalFullCalendar').fullCalendar({
+            $('#bootstrapModalFullCalendar').fullCalendar({
                 header:{
                     left: '',
                     center: 'prev title next',
                     right: ''
                 },
-                eventClick: function(event, jsEvebtm view){
+                eventClick: function(event, jsEvent, view){
                     $('#modalTitle').html(event.title);
                     $('#modalBody').html(event.description);
                     $('#eventUrl').attr('href', event.url);
-                    $('#fullCallModal').modal();
+                    $('#fullCalModal').modal();
                     return false;
                 },
-                event: '@Url.Action("findallevents", "event")'
+                events: `@Url.Action("findallevents", "events")`
             })
         })
     </script>

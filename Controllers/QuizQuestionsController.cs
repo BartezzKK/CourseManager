@@ -9,6 +9,7 @@ using CourseManager.Data;
 using CourseManager.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CourseManager.Controllers
 {
@@ -62,6 +63,7 @@ namespace CourseManager.Controllers
         //}
 
         // GET: QuizQuestions/Create
+        [Authorize(Roles = "Administrator, Teacher")]
         public IActionResult Create(string quizName, int quizId)
         {
             ViewBag.QuizId = quizId;
@@ -101,6 +103,7 @@ namespace CourseManager.Controllers
         // POST: QuizQuestions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormCollection formCollection)
@@ -118,6 +121,7 @@ namespace CourseManager.Controllers
         }
 
         // GET: QuizQuestions/Edit/5
+        [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -136,6 +140,7 @@ namespace CourseManager.Controllers
         // POST: QuizQuestions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Question,QuizId,AnswerA,AnswerB,AnswerC,AnswerD,CorrectAnswer,UserId")] QuizQuestion quizQuestion)
@@ -169,6 +174,7 @@ namespace CourseManager.Controllers
         }
 
         // GET: QuizQuestions/Delete/5
+        [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -187,6 +193,7 @@ namespace CourseManager.Controllers
         }
 
         // POST: QuizQuestions/Delete/5
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -202,10 +209,5 @@ namespace CourseManager.Controllers
             return _context.QuizQuestions.Any(e => e.Id == id);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Index()
-        //{
-        //    return 
-        //}
     }
 }

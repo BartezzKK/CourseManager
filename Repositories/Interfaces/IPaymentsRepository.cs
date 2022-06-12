@@ -12,5 +12,6 @@ namespace CourseManager.Repositories.Interfaces
         List<Payment> GetPayments();
         List<Payment> GetPaymentsByUserId(string userId);
         Payment GetPaymentById(int? id);
+        bool CheckPaymentForUser(string userId);
     }
 }

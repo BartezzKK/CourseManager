@@ -1,0 +1,29 @@
+﻿<form asp-controller="QuizAttempts" asp-action="SubmitQuiz">
+@foreach (var item in ViewBag.Questions)
+{
+    <li>
+        @item.Question
+
+            <input type="hidden" name="questionId=@item.Id" value="@item.Id"/>
+                <ol type="A">
+                    <ol>
+                        <input type="radio" name="AQAns_@item.Id" value="@item.Id"/>
+                        @item.AnswerA
+                    </ol>
+                    <ol>
+                        <input type="radio" name="BQAns_@item.Id" value="@item.Id"/>
+                        @item.AnswerB
+                    </ol>
+                    <ol>
+                        <input type="radio" name="CQAns_@item.Id" value="@item.Id"/>
+                        @item.AnswerC
+                    </ol>
+                    <ol>
+                        <input type="radio" name="DQAns_@item.Id" value="@item.Id"/>
+                        @item.AnswerD
+                    </ol>
+            </ol>
+    </li>
+}
+<input type="submit" value="Submit" />
+</form>
