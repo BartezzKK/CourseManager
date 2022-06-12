@@ -286,6 +286,138 @@ body {
         left: 2px;
     }
 
+/* contact Page  css */
+
+
+.section--5 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+
+
+    .section--5 form {
+        background-color: white;
+        padding: 2rem;
+        width: 500px;
+        height: 560px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        position: relative;
+        justify-content: center;
+        margin-top: 10vh;
+        border: 3px solid black;
+    }
+
+        .section--5 form h3 {
+            color: #312f2f;
+            padding-bottom: 2rem;
+            font-size: 1.7rem;
+        }
+
+        .section--5 form .form--box {
+            width: 80%;
+            height: 2.4rem;
+            position: relative;
+            margin: 0.4rem;
+            overflow-x: hidden;
+        }
+
+            .section--5 form .form--box .form--input, .section--5 form .form--box .form--label {
+                padding-top: 13px;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                outline: none;
+                border: none;
+            }
+
+                .section--5 form .form--box .form--input:focus + .form--label .form--text, .section--5 form .form--box .form--label:focus + .form--label .form--text, .section--5 form .form--box .form--input:valid + .form--label .form--text, .section--5 form .form--box .form--label:valid + .form--label .form--text {
+                    transform: translateY(-13px);
+                    color: #0dc5a0;
+                    font-size: 13px;
+                }
+
+                .section--5 form .form--box .form--input:focus + .form--label::before, .section--5 form .form--box .form--label:focus + .form--label::before, .section--5 form .form--box .form--input:valid + .form--label::before, .section--5 form .form--box .form--label:valid + .form--label::before {
+                    transform: translateX(0);
+                }
+
+            .section--5 form .form--box .form--label {
+                pointer-events: none;
+                border-bottom: 2px solid black;
+            }
+
+                .section--5 form .form--box .form--label span {
+                    color: black;
+                    display: block;
+                    transition: transform 0.3s ease, font-size 0.3s ease;
+                }
+
+                .section--5 form .form--box .form--label::before {
+                    content: "";
+                    left: 0;
+                    bottom: -2px;
+                    width: 100%;
+                    height: 3px;
+                    background-color: #0dc5a0;
+                    position: absolute;
+                    transform: translateX(-100%);
+                    transition: transform 0.3s ease;
+                }
+
+        .section--5 form .form--textarea {
+            height: 13rem;
+        }
+
+        .section--5 form .form--btn {
+            margin-top: 15px;
+            padding: 10px 35px;
+            border: none;
+            position: relative;
+        }
+
+            .section--5 form .form--btn::before, .section--5 form .form--btn::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                border: 3px solid #000;
+                width: 100%;
+                height: 100%;
+                transition: transform 0.3s ease;
+            }
+
+            .section--5 form .form--btn:hover::before {
+                transform: translate(-4px, -4px);
+                cursor: pointer;
+            }
+
+            .section--5 form .form--btn:hover::after {
+                transform: translate(4px, 4px);
+                cursor: pointer;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (min-width: 768px) {
     .materials__btn {
         padding: .75rem 3rem;
@@ -366,11 +498,9 @@ button:focus {
         border-right: none;
         border-bottom: 1px solid #EEEEEE;
     }
+    .section--5 form {
+        width: 100%;
+        border: none;
+    }
 }
 
-.border-edus {
-    border: 1px solid #000;
-    border-radius: 20px;
-    padding: 15px;
-    background-color: gainsboro;
-}
