@@ -22,12 +22,18 @@ namespace CourseManager.Views
         }
 
         // GET: ArticleEdus
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsInRole("User") && !UserHasPayment(this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            {
+                return RedirectToAction("MissingPayment", "Administration");
+            }
             return View(await _context.ArticleEdu.ToListAsync());
         }
 
         // GET: ArticleEdus/Details/5
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -156,9 +162,16 @@ namespace CourseManager.Views
             return RedirectToAction(nameof(Index));
         }
 
+
+
         private bool ArticleEduExists(int id)
         {
             return _context.ArticleEdu.Any(e => e.Id == id);
+        }
+
+        private bool UserHasPayment(string userId)
+        {
+            return _context.Payments.Where(p => p.UserId == userId && DateTime.Today > p.PaymentDate && DateTime.Now < p.EndSubscription).Any();
         }
     }
 }

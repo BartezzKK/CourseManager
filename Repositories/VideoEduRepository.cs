@@ -58,6 +58,10 @@ namespace CourseManager.Repositories
             return false;
         }
 
+        public bool HasPayments(string userId)
+        {
+            return _context.Payments.Where(p => p.UserId == userId && DateTime.Today > p.PaymentDate && DateTime.Now < p.EndSubscription).Any();
+        }
 
         private List<VideoEdu> Videos = new List<VideoEdu>
         {

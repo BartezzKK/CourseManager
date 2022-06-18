@@ -1,9 +1,11 @@
 ﻿using CourseManager.Models;
 using CourseManager.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CourseManager.Controllers
@@ -21,6 +23,10 @@ namespace CourseManager.Controllers
 
         public IActionResult List()
         {
+            if (this.User.IsInRole("User") && !UserHasPayment(this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            {
+                return RedirectToAction("MissingPayment", "Administration");
+            }
             List<VideoEdu> videos = videoEduRepository.GetVideos();
             ViewBag.Videos = videos;
             ViewBag.PageTitle = "Videos";
@@ -33,13 +39,14 @@ namespace CourseManager.Controllers
             VideoEdu video = videoEduRepository.GetVideo(id);
             return View(video);
         }
-
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpGet]
         public ViewResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
         public async Task<IActionResult> Create(VideoEdu video)
         {
@@ -63,6 +70,11 @@ namespace CourseManager.Controllers
                 throw;
             }
             return View(video);
+        }
+
+        private bool UserHasPayment(string userId)
+        {
+            return videoEduRepository.HasPayments(userId);
         }
     }
 }

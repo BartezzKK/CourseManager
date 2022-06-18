@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CourseManager.Data;
 using CourseManager.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace CourseManager.Controllers
 {
@@ -20,12 +22,18 @@ namespace CourseManager.Controllers
         }
 
         // GET: Events
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsInRole("User") && !UserHasPayment(this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            {
+                return RedirectToAction("MissingPayment", "Administration");
+            }
             return View(await _context.Event.ToListAsync());
         }
 
         // GET: Events/Details/5
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +52,7 @@ namespace CourseManager.Controllers
         }
 
         // GET: Events/Create
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public IActionResult Create()
         {
             return View();
@@ -52,6 +61,7 @@ namespace CourseManager.Controllers
         // POST: Events/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, Teacher, User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,StartDate,EndTime,Location")] Event @event)
@@ -66,6 +76,7 @@ namespace CourseManager.Controllers
         }
 
         // GET: Events/Edit/5
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,6 +95,7 @@ namespace CourseManager.Controllers
         // POST: Events/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, Teacher, User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,StartDate,EndTime,Location")] Event @event)
@@ -117,6 +129,7 @@ namespace CourseManager.Controllers
         }
 
         // GET: Events/Delete/5
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +148,7 @@ namespace CourseManager.Controllers
         }
 
         // POST: Events/Delete/5
+        [Authorize(Roles = "Administrator, Teacher, User")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -151,6 +165,7 @@ namespace CourseManager.Controllers
         }
 
 
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public IActionResult FindAllEvents()
         {
             var events = _context.Event.Select(p => new
@@ -162,6 +177,12 @@ namespace CourseManager.Controllers
                 end = p.EndTime.ToString("MM/dd/yyyy")
             }).ToList();
             return new JsonResult(events);
+        }
+
+
+        private bool UserHasPayment(string userId)
+        {
+            return _context.Payments.Where(p => p.UserId == userId && DateTime.Today > p.PaymentDate && DateTime.Now < p.EndSubscription).Any();
         }
     }
 }

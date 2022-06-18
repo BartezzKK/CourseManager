@@ -14,5 +14,6 @@ namespace CourseManager.Repositories.Interfaces
         void Create(VideoEdu video);
         bool Save();
         bool Delete(int id);
+        bool HasPayments(string userId);
     }
 }

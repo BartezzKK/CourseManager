@@ -1,4 +1,5 @@
 ﻿using CourseManager.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,12 +15,14 @@ namespace CourseManager.Controllers
         {
             this.context = context;
         }
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public IActionResult Index()
         {
             ViewBag.Quizes = context.QuizEdus.ToList();
             return View();
         }
 
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public IActionResult StartQuiz(int? id)
         {
             if(id == null)
@@ -30,6 +33,7 @@ namespace CourseManager.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator, Teacher, User")]
         [HttpPost]
         public IActionResult SubmitQuiz(IFormCollection iform)
         {

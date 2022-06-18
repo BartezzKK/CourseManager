@@ -148,5 +148,10 @@ namespace CourseManager.Controllers
             return RedirectToAction("ListRoles");
         }
 
+        public IActionResult MissingPayment()
+        {
+            return View();
+        }
+
     }
 }

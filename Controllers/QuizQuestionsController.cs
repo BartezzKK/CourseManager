@@ -23,11 +23,17 @@ namespace CourseManager.Controllers
         }
 
         // GET: QuizQuestions
+        [Authorize(Roles = "Administrator, Teacher, User")]
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsInRole("User") && !UserHasPayment(this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            {
+                return RedirectToAction("MissingPayment", "Administration");
+            }
             return View(await _context.QuizQuestions.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrator, Teacher, User")]
         // GET: QuizQuestions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,21 +52,6 @@ namespace CourseManager.Controllers
             return View(quizQuestion);
         }
 
-        //// GET: QuizQuestions/Create
-        //public IActionResult Create(string quizName, int quizId)
-        //{
-        //    ViewBag.QuizId = quizId;
-        //    ViewBag.QuizName = quizName;
-
-        //    ViewBag.Options = new List<SelectListItem>
-        //    {
-        //        new SelectListItem{Value="A", Text ="A"},
-        //        new SelectListItem{Value="B", Text ="B"},
-        //        new SelectListItem{Value="C", Text ="C"},
-        //        new SelectListItem{Value="D", Text ="D"}
-        //    };
-        //    return View();
-        //}
 
         // GET: QuizQuestions/Create
         [Authorize(Roles = "Administrator, Teacher")]
@@ -84,10 +75,31 @@ namespace CourseManager.Controllers
         // POST: QuizQuestions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(QuizQuestion quizQuestion)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                quizQuestion.UserId = userId;
+                _context.Add(quizQuestion);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(quizQuestion);
+        }
+
+
+        // POST: QuizQuestions/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[Authorize(Roles = "Administrator, Teacher")]
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(QuizQuestion quizQuestion)
+        //public async Task<IActionResult> Create(IFormCollection formCollection)
         //{
+        //    string[] cos = formCollection[""];
         //    if (ModelState.IsValid)
         //    {
         //        var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -98,27 +110,6 @@ namespace CourseManager.Controllers
         //    }
         //    return View(quizQuestion);
         //}
-
-
-        // POST: QuizQuestions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator, Teacher")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormCollection formCollection)
-        {
-            string[] cos = formCollection[""];
-            if (ModelState.IsValid)
-            {
-                //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                //quizQuestion.UserId = userId;
-                //_context.Add(quizQuestion);
-                //await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
-            }
-            return View("31");
-        }
 
         // GET: QuizQuestions/Edit/5
         [Authorize(Roles = "Administrator, Teacher")]
@@ -207,6 +198,11 @@ namespace CourseManager.Controllers
         private bool QuizQuestionExists(int id)
         {
             return _context.QuizQuestions.Any(e => e.Id == id);
+        }
+
+        private bool UserHasPayment(string userId)
+        {
+            return _context.Payments.Where(p => p.UserId == userId && DateTime.Today > p.PaymentDate && DateTime.Now < p.EndSubscription).Any();
         }
 
     }

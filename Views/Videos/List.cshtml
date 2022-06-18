@@ -26,4 +26,7 @@
     
 </div>
 <br />
-<a class="btn btn-primary" asp-area="" asp-controller="Videos" asp-action="Create">Add new Video</a>
+@if(User.IsInRole("Administrator") || User.IsInRole("Teacher"))
+{
+    <a class="btn btn-primary" asp-area="" asp-controller="Videos" asp-action="Create">Add new Video</a>
+}
