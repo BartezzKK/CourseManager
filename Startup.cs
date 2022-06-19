@@ -1,3 +1,4 @@
+using CourseManager.Classes;
 using CourseManager.Data;
 using CourseManager.Repositories;
 using CourseManager.Repositories.Interfaces;
@@ -48,6 +49,7 @@ namespace CourseManager
             }).AddXmlSerializerFormatters();
             services.AddTransient<IVideoEduRepository, VideoEduRepository>();
             services.AddTransient<IPaymentsRepository, PaymentRepository>();
+            services.AddControllersWithViews(opt => opt.ModelValidatorProviders.Add(new AppModelValidatorProvider()));
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

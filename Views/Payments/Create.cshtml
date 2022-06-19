@@ -39,6 +39,8 @@
          <p class="text-muted text-sm mb-0">CVV/CVC</p>
          <input type="password" name="cvv" placeholder="000" size="1" minlength="3" maxlength="3">
       </div>
+      <span>You Have to pay:</span>
+      <span id="AmountToPay" style="font-size:20px; color:red">0</span> <span> $</span>
       <div class="form-group">
          <input type="submit" value="Pay" class="btn btn-primary" />
       </div>
@@ -51,33 +53,42 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script type="text/javascript"> 
-    $(document).ready(function(){
-//For Card Number formatted input
-var cardNum = document.getElementById('cr_no');
-cardNum.onkeyup = function (e) {
-    if (this.value == this.lastValue) return;
-    var caretPosition = this.selectionStart;
-    var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
-    var parts = [];
-    
-    for (var i = 0, len = sanitizedValue.length; i < len; i += 4) {
-        parts.push(sanitizedValue.substring(i, i + 4));
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    
-    for (var i = caretPosition - 1; i >= 0; i--) {
-        var c = this.value[i];
-        if (c < '0' || c > '9') {
-            caretPosition--;
-        }
-    }
-    caretPosition += Math.floor(caretPosition / 4);
-    
-    this.value = this.lastValue = parts.join(' ');
-    this.selectionStart = this.selectionEnd = caretPosition;
-}
+        <script type="text/javascript"> 
+        $(document).ready(function()
+        {
+    //For Card Number formatted input
+    var cardNum = document.getElementById('cr_no');
+    cardNum.onkeyup = function (e) {
+        if (this.value == this.lastValue) return;
+        var caretPosition = this.selectionStart;
+        var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+        var parts = [];
 
+        for (var i = 0, len = sanitizedValue.length; i < len; i += 4) {
+            parts.push(sanitizedValue.substring(i, i + 4));
+        }
+
+        for (var i = caretPosition - 1; i >= 0; i--) {
+            var c = this.value[i];
+            if (c < '0' || c > '9') {
+                caretPosition--;
+            }
+        }
+        caretPosition += Math.floor(caretPosition / 4);
+
+        this.value = this.lastValue = parts.join(' ');
+        this.selectionStart = this.selectionEnd = caretPosition;
+        var endSub = $('input#EndSubscription').val();
+    var payDay = $('input#PaymentDate').val();
+        console.log(getDaysBetweenDates(payDay, endSub));
+        $('#AmountToPay').text(getDaysBetweenDates(payDay, endSub) * 3);
+
+    }
+
+    
 //For Date formatted input
 var expDate = document.getElementById('exp');
 expDate.onkeyup = function (e) {
@@ -103,5 +114,21 @@ expDate.onkeyup = function (e) {
 }
 
 });
+
+function getDaysBetweenDates(d0, d1) {
+
+  var msPerDay = 8.64e7;
+
+  // Copy dates so don't mess them up
+  var x0 = new Date(d0);
+  var x1 = new Date(d1);
+
+  // Set to noon - avoid DST errors
+  x0.setHours(12,0,0);
+  x1.setHours(12,0,0);
+
+  // Round to remove daylight saving errors
+  return Math.round( (x1 - x0) / msPerDay );
+}
 </script>
 }

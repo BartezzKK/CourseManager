@@ -504,3 +504,31 @@ button:focus {
     }
 }
 
+
+#scrollToTopBtn {
+    border: none;
+    border-radius: 50%;
+    color: black;
+    cursor: pointer;
+    height: 48px;
+    width: 48px;
+    bottom: 15px;
+    right: 35px;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(100px);
+    background-color: #1098F7;
+    transition: all 0.7s ease;
+    font-size: 24px;
+}
+
+    #scrollToTopBtn i {
+        font-size: 24px;
+    }
+
+    #scrollToTopBtn:hover {
+        background-color: #CA3CFF;
+    }
+
